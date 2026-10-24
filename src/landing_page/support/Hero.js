@@ -1,90 +1,141 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
+  const [search, setSearch] = useState("");
+
+  const quickLinks = [
+    "Track account opening",
+    "Segment activation",
+    "Intraday margins",
+    "Kite user manual",
+  ];
+
+  const featuredLinks = [
+    "Latest trading updates and market notices",
+    "Intraday leverage and margin requirements",
+    "How to raise and track a support ticket",
+  ];
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    if (search.trim()) {
+      // Pass the search query to your support page.
+      window.location.href = `/support?search=${encodeURIComponent(
+        search.trim(),
+      )}`;
+    }
+  };
+
   return (
-    <div className="container-fluid">
+    <section className="container-fluid px-0">
       <div
-        className="row p-5 text-white"
+        className="row g-0 text-white align-items-center px-3 px-md-5 py-5"
         style={{
-          backgroundColor: "#387ed1",
-          minHeight: "400px",
+          background: "linear-gradient(135deg, #387ed1, #245da8)",
+          minHeight: "440px",
         }}
       >
         {/* Left Section */}
-        <div className="col-md-7 p-4">
-          <h2 className="mb-4">Support Portal</h2>
+        <div className="col-12 col-lg-7 p-3 p-md-4">
+          <span className="badge bg-white bg-opacity-25 text-white px-3 py-2 mb-4">
+            TRADENEST HELP CENTER
+          </span>
 
-          <h4 className="mb-4">
-            Search for an answer or browse help topics to create a ticket
-          </h4>
+          <h1 className="display-5 fw-semibold mb-3">How can we help you?</h1>
 
-          <div className="input-group mb-4">
-            <input
-              type="text"
-              className="form-control p-3"
-              placeholder="Eg. How do I activate F&O?"
-              aria-label="Search help topics"
-            />
-
-            <button className="btn btn-dark px-4">Search</button>
-          </div>
-
-          <p className="mb-2">
-            <strong>Quick Links</strong>
+          <p className="fs-5 lh-lg mb-4 text-white">
+            Search for answers, explore help topics, or get assistance with your
+            TradeNest experience.
           </p>
 
-          <div className="d-flex flex-wrap gap-3">
-            <a href="/support" className="text-white">
-              Track account opening
-            </a>
+          <form
+            className="input-group input-group-lg mb-4"
+            onSubmit={handleSearch}
+          >
+            <input
+              type="search"
+              className="form-control border-0 shadow-none"
+              placeholder="Try 'account opening' or 'margin requirements'"
+              aria-label="Search help topics"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
 
-            <a href="/support" className="text-white">
-              Segment activation
-            </a>
+            <button className="btn btn-dark px-4" type="submit">
+              <i className="fa fa-search me-2" aria-hidden="true"></i>
+              Search
+            </button>
+          </form>
 
-            <a href="/support" className="text-white">
-              Intraday margins
-            </a>
+          <p className="fw-semibold mb-3">Popular help topics</p>
 
-            <a href="/support" className="text-white">
-              Kite user manual
-            </a>
+          <div className="d-flex flex-wrap gap-2">
+            {quickLinks.map((item) => (
+              <Link
+                key={item}
+                to={`/support?search=${encodeURIComponent(item)}`}
+                className="text-white border border-white border-opacity-50 rounded-pill px-3 py-2 text-decoration-none small"
+              >
+                {item}
+              </Link>
+            ))}
           </div>
         </div>
 
         {/* Right Section */}
-        <div className="col-md-5 p-4">
-          <h4 className="mb-4">
-            <i className="fa fa-bullhorn me-2"></i>
-            Featured
-          </h4>
+        <div className="col-12 col-lg-5 p-3 p-md-4 mt-4 mt-lg-0">
+          <div className="bg-white text-dark rounded-4 shadow p-4 p-md-5">
+            <div className="d-flex align-items-center mb-4">
+              <div className="bg-primary bg-opacity-10 text-primary rounded-3 p-3 me-3">
+                <i className="fa fa-bullhorn fs-4" aria-hidden="true"></i>
+              </div>
 
-          <ul className="list-unstyled">
-            <li className="mb-3">
-              <a href="/support" className="text-white">
-                Latest trading updates and market notices
-              </a>
-            </li>
+              <div>
+                <h2 className="h4 fw-semibold mb-1">Featured Updates</h2>
+                <p className="text-secondary small mb-0">
+                  Useful information and support
+                </p>
+              </div>
+            </div>
 
-            <li className="mb-3">
-              <a href="/support" className="text-white">
-                Intraday leverage and margin requirements
-              </a>
-            </li>
+            <ul className="list-unstyled mb-4">
+              {featuredLinks.map((item, index) => (
+                <li
+                  key={item}
+                  className={`d-flex align-items-start gap-3 ${
+                    index !== featuredLinks.length - 1
+                      ? "border-bottom pb-3 mb-3"
+                      : ""
+                  }`}
+                >
+                  <i
+                    className="fa fa-arrow-right text-primary mt-1"
+                    aria-hidden="true"
+                  ></i>
 
-            <li className="mb-3">
-              <a href="/support" className="text-white">
-                How to raise and track a support ticket
-              </a>
-            </li>
-          </ul>
+                  <Link
+                    to={`/support?search=${encodeURIComponent(item)}`}
+                    className="text-dark text-decoration-none"
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-          <a href="/support" className="btn btn-light mt-3">
-            Raise a Ticket →
-          </a>
+            <Link
+              to="/support"
+              className="btn btn-primary w-100 rounded-pill py-3 fw-semibold"
+            >
+              <i className="fa fa-ticket me-2" aria-hidden="true"></i>
+              Raise a Support Ticket
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

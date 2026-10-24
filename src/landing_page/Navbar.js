@@ -1,114 +1,85 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navLinks = [
+    { name: "About", path: "/about" },
+    { name: "Products", path: "/product" },
+    { name: "Pricing", path: "/pricing" },
+    { name: "Support", path: "/support" },
+  ];
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <nav
-      className="navbar navbar-expand-lg border-bottom"
-      style={{
-        backgroundColor: "#fff",
-        minHeight: "70px",
-      }}
-    >
+    <nav className="navbar navbar-expand-lg bg-white border-bottom sticky-top py-3">
       <div className="container">
         {/* Logo */}
-        <Link className="navbar-brand" to="/">
+        <Link
+          className="navbar-brand me-4"
+          to="/"
+          onClick={closeMenu}
+          aria-label="TradeNest home"
+        >
           <img
             src="/media/images/logotn.img.png"
-            alt="tradeNest"
-            style={{
-              width: "160px",
-              height: "auto",
-            }}
+            alt="TradeNest"
+            className="img-fluid"
+            style={{ width: "150px", maxHeight: "48px" }}
           />
         </Link>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Toggle */}
         <button
-          className="navbar-toggler"
+          className="navbar-toggler shadow-none"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          aria-controls="tradeNestNavbar"
+          aria-expanded={menuOpen}
+          aria-label={
+            menuOpen ? "Close navigation menu" : "Open navigation menu"
+          }
+          onClick={() => setMenuOpen((prev) => !prev)}
         >
-          <span className="navbar-toggler-icon"></span>
+          <i
+            className={`fa ${menuOpen ? "fa-times" : "fa-bars"} fs-4 text-dark`}
+            aria-hidden="true"
+          ></i>
         </button>
 
-        {/* Navigation Links */}
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-            <li className="nav-item">
-              <Link className="nav-link px-3" to="/signup">
-                Signup
-              </Link>
-            </li>
+        {/* Navigation */}
+        <div
+          id="tradeNestNavbar"
+          className={`collapse navbar-collapse ${menuOpen ? "show" : ""}`}
+        >
+          <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-2 pt-3 pt-lg-0">
+            {navLinks.map((link) => (
+              <li className="nav-item" key={link.path}>
+                <NavLink
+                  to={link.path}
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `nav-link px-3 py-2 fw-medium ${
+                      isActive ? "text-primary" : "text-secondary"
+                    }`
+                  }
+                  end={link.path === "/"}
+                >
+                  {link.name}
+                </NavLink>
+              </li>
+            ))}
 
-            <li className="nav-item">
-              <Link className="nav-link px-3" to="/about">
-                About
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link px-3" to="/product">
-                Products
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link px-3" to="/pricing">
-                Pricing
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link px-3" to="/support">
-                Support
-              </Link>
-            </li>
-
-            {/* Menu Icon */}
-            <li className="nav-item ms-lg-3">
-              <button
-                className="btn p-2"
-                type="button"
-                aria-label="Menu"
-                style={{
-                  border: "none",
-                  background: "transparent",
-                }}
+            {/* Signup */}
+            <li className="nav-item ms-lg-2 mt-2 mt-lg-0">
+              <Link
+                to="/signup"
+                onClick={closeMenu}
+                className="btn btn-primary rounded-pill px-4 py-2 fw-semibold"
               >
-                <span
-                  style={{
-                    display: "block",
-                    width: "22px",
-                    height: "2px",
-                    backgroundColor: "#424242",
-                    marginBottom: "5px",
-                  }}
-                ></span>
-
-                <span
-                  style={{
-                    display: "block",
-                    width: "22px",
-                    height: "2px",
-                    backgroundColor: "#424242",
-                    marginBottom: "5px",
-                  }}
-                ></span>
-
-                <span
-                  style={{
-                    display: "block",
-                    width: "22px",
-                    height: "2px",
-                    backgroundColor: "#424242",
-                  }}
-                ></span>
-              </button>
+                Get Started
+              </Link>
             </li>
           </ul>
         </div>

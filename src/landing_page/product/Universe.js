@@ -1,65 +1,110 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Universe = () => {
   const platforms = [
     {
       imageUrl: "/media/images/zerodhaFundhouse.png",
+      name: "Fundhouse",
       description:
-        "Our asset management venture, creating simple and transparent index funds to help you save for your goals.",
+        "Explore index funds and learn about transparent, goal-oriented investing.",
     },
     {
       imageUrl: "/media/images/sensibullLogo.svg",
+      name: "Sensibull",
       description:
-        "Options trading made simple with powerful tools and strategies.",
+        "Discover options-trading tools designed to help analyze strategies and market scenarios.",
     },
     {
       imageUrl: "/media/images/smallcaseLogo.png",
+      name: "smallcase",
       description:
-        "Invest in ready-made baskets of stocks built around different themes.",
+        "Explore themed baskets of stocks and exchange-traded funds.",
     },
     {
       imageUrl: "/media/images/streakLogo.png",
-      description: "Create, backtest, and deploy trading strategies with ease.",
+      name: "Streak",
+      description:
+        "Learn about creating and testing rule-based trading strategies.",
     },
     {
       imageUrl: "/media/images/dittoLogo.png",
+      name: "Ditto",
       description:
-        "Get guidance to understand insurance and choose suitable coverage.",
+        "Understand insurance options and explore guidance for choosing coverage.",
     },
   ];
 
   return (
-    <div className="container mt-5 mb-5">
-      <div className="row text-center justify-content-center">
-        <div className="col-12 mb-5">
-          <h2>The TradeNest Universe</h2>
-          <p className="text-muted mt-3">
-            Extend your trading and investment experience even further with our
-            partner platforms.
-          </p>
-          <a href="#" className="text-decoration-none">
-            Explore our products <i className="fa fa-arrow-right ms-1"></i>
-          </a>
-        </div>
+    <section className="container py-5 my-4">
+      {/* Section Heading */}
+      <div className="text-center mb-5">
+        <span className="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3">
+          CONNECTED EXPERIENCES
+        </span>
 
-        {platforms.map((platform, index) => (
-          <div className="col-6 col-md-4 col-lg-3 p-4" key={index}>
-            <img
-              src={platform.imageUrl}
-              alt="TradeNest partner platform"
-              className="img-fluid mb-3"
-              style={{
-                maxWidth: "150px",
-                height: "50px",
-                objectFit: "contain",
-              }}
-            />
+        <h2 className="display-6 fw-semibold text-dark mb-3">
+          The TradeNest <span className="text-primary">Universe</span>
+        </h2>
 
-            <p className="text-muted small">{platform.description}</p>
+        <p
+          className="text-secondary lh-lg mx-auto mb-4"
+          style={{ maxWidth: "650px" }}
+        >
+          Discover tools and services across the investing ecosystem to explore
+          markets, learn about financial products, and make informed decisions.
+        </p>
+
+        <Link
+          to="/product"
+          className="text-primary fw-semibold text-decoration-none"
+        >
+          Explore our products
+          <i className="fa fa-arrow-right ms-2" aria-hidden="true"></i>
+        </Link>
+      </div>
+
+      {/* Platform Cards */}
+      <div className="row g-4 justify-content-center">
+        {platforms.map((platform) => (
+          <div className="col-12 col-sm-6 col-lg-4" key={platform.name}>
+            <div className="card h-100 border-0 shadow-sm rounded-4 p-3 p-md-4 text-center">
+              <div className="card-body d-flex flex-column align-items-center">
+                <div
+                  className="d-flex align-items-center justify-content-center w-100 mb-4"
+                  style={{ height: "65px" }}
+                >
+                  <img
+                    src={platform.imageUrl}
+                    alt={`${platform.name} logo`}
+                    className="img-fluid"
+                    style={{
+                      maxWidth: "155px",
+                      maxHeight: "55px",
+                      objectFit: "contain",
+                    }}
+                    loading="lazy"
+                  />
+                </div>
+
+                <h3 className="h5 fw-semibold text-dark mb-3">
+                  {platform.name}
+                </h3>
+
+                <p className="text-secondary small lh-lg mb-0">
+                  {platform.description}
+                </p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
-    </div>
+
+      <p className="text-muted small text-center mt-4 mb-0">
+        These logos and names represent third-party services. Their inclusion
+        does not imply an official partnership with TradeNest.
+      </p>
+    </section>
   );
 };
 
